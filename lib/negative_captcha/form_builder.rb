@@ -69,7 +69,7 @@ module ActionView
       private
 
       def _surround_with_error(html, method)
-        if @object.errors[method].present?
+        if object.errors[method].present?
           ActionView::Base.field_error_proc.call(html, self)
         else
           html
