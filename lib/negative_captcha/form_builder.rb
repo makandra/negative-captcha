@@ -8,11 +8,7 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
 
       def negative_text_area(captcha, method, options = {})
@@ -22,11 +18,7 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
 
       def negative_hidden_field(captcha, method, options = {})
@@ -40,11 +32,7 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
 
       def negative_check_box_field(captcha, method, options = {})
@@ -54,11 +42,7 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
 
       def negative_password_field(captcha, method, options = {})
@@ -68,11 +52,7 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
 
       def negative_label(captcha, method, name, options = {})
@@ -83,12 +63,19 @@ module ActionView
           options
         ).html_safe
 
-        if @object.errors[method].present?
-          html = "<div class='fieldWithErrors'>#{html}</div>"
-        end
-
-        html.html_safe
+        _surround_with_error(html, method)
       end
+
+      private
+
+      def _surround_with_error(html, method)
+        if @object.errors[method].present?
+          ActionView::Base.field_error_proc.call(html, self)
+        else
+          html
+        end
+      end
+
     end
   end
 end
